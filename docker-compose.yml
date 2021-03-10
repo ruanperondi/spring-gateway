@@ -1,0 +1,23 @@
+version: "3.5"
+
+services:
+  discovery:
+    image: ruanperondi/discovery
+    container_name: service-discovery
+    ports:
+      - target: 8761
+        published: 8761
+
+  gateway:
+    build: .
+    container_name: service-gateway
+    command: java -jar app/app.java
+    ports:
+      - target: 8080
+        published: 8080
+    depends_on:
+      - discovery
+    environment:
+      - EUREKA_URI=http://discovery:8761/eureka
+    links:
+      - discovery:discovery
