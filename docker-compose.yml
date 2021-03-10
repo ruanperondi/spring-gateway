@@ -7,4 +7,3 @@ services:
     ports:
       - target: 8761
         published: 8761
-
